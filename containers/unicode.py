@@ -31,9 +31,9 @@ class NormalizedStr:
         code that can be substituted directly into the python interpreter to
         reproduce an equivalent object.
         '''
-
-        return ('NormalizedStr(\'' + self._text + '\', \'' + self._normal_form
-                + '\')')
+        repr1 = 'NormalizedStr(\'' + self._text
+        repr1 += ('\', \'' + self._normal_form + '\')')
+        return repr1
 
     def __str__(self):
         '''
