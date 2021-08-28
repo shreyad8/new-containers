@@ -130,7 +130,7 @@ class Heap(BinaryTree):
         while size != 0:
             bit = size % 2
             path.insert(0, bit)
-            size = size/2
+            size = size / 2
             path = path[1:]
 
         if path[0] == 0:
