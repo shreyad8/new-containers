@@ -26,7 +26,7 @@ class Heap(BinaryTree):
         If xs is a list (i.e. xs is not None),
         then each element of xs needs to be inserted into the Heap.
         '''
-        
+
         super().__init__()
         self.size = 0
         if xs:
@@ -70,9 +70,6 @@ class Heap(BinaryTree):
         '''
 
         ret = True
-        #if (must have either 0 or 2 children, except on last row where there
-        #can be at most one node with only a left child but no right child
-        #(filled from left to right))
         if node.left:
             if node.value <= node.left:
                 ret &= Heap._is_heap_satisfied(node.left)
@@ -88,7 +85,7 @@ class Heap(BinaryTree):
         ret = True
         height_left = Heap._height(node.left)
         height_right = Heap._height(node.right)
-                
+
         if height_left == height_right:
             Heap._is_heap_satisfied(node.left)
 
@@ -131,29 +128,28 @@ class Heap(BinaryTree):
         size = Heap.__len__() + 1
         path = []
         while size != 0:
-            bit = num % 2
+            bit = size % 2
             path.insert(0, bit)
-            num = num/2
+            size = size/2
             path = path[1:]
 
         if path[0] == 0:
-            if node.left == None:
+            if node.left is None:
                 node.left = Node(value)
             else:
                 new_node = Heap._insert(value, node.left, path[1:])
         if path[0] == 1:
-            if node.right == None:
-                 node.right = Node(value)
+            if node.right is None:
+                node.right = Node(value)
             else:
                 new_node = Heap._insert(value, node.right, path[1:])
-        
+
         if node.value > new_node.value:
-           temp = node.value
-           node.value = new_node.value
-           new_node.value = temp
+            temp = node.value
+            node.value = new_node.value
+            new_node.value = temp
 
         return node.value
-
 
     def insert_list(self, xs):
         '''
@@ -177,7 +173,7 @@ class Heap(BinaryTree):
         if self.root is None:
             raise ValueError('Nothing in tree')
         else:
-            return Heap._find_smallest(node.left)
+            return Heap._find_smallest(self.root)
 
     @staticmethod
     def _find_smallest(node):
@@ -210,7 +206,6 @@ class Heap(BinaryTree):
         sense.
         '''
 
-        size = Heap.__len__()
         Heap._remove_bottom_right(self.root)
         Heap._trickle(self.root)
 
@@ -221,11 +216,11 @@ class Heap(BinaryTree):
         path = []
         root = node
         while size != 0:
-            bit = num % 2
+            bit = size % 2
             path.insert(0, bit)
-            num = num / 2
+            size = size / 2
         path = path[1:]
-        
+
         for i in path[:-1]:
 
             if i == 0:
@@ -243,15 +238,15 @@ class Heap(BinaryTree):
     @staticmethod
     def _trickle(node):
 
-        if node.left and node.right == None:
-            return 
-        elif node.left == None:
-            Heap._trickle(node.right, value)
-        elif node.right == None:
-            Heap._trickle(node.left, value)
+        if node.left is None and node.right is None:
+            return
+        elif node.left is None:
+            Heap._trickle(node.right)
+        elif node.right is None:
+            Heap._trickle(node.left)
         elif node.left < node.right:
-            Heap._trickle(node.left, value)
+            Heap._trickle(node.left)
         elif node.right < node.left:
-            Heap._trickle(node.right, value)
+            Heap._trickle(node.right)
         else:
-            Heap._trickle(node.left, value)
+            Heap._trickle(node.left)
