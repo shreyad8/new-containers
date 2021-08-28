@@ -9,7 +9,7 @@ This homework is using an explicit tree implementation to help you get more
 practice with OOP-style programming and classes.
 '''
 
-from BinaryTree import BinaryTree, Node
+from containers.BinaryTree import BinaryTree, Node
 
 
 class Heap(BinaryTree):
