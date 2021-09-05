@@ -68,7 +68,7 @@ class Heap(BinaryTree):
         FIXME:
         Implement this method.
         '''
-    
+
         if node.left:
             if node.value > node.left.value:
                 return False
@@ -110,19 +110,19 @@ class Heap(BinaryTree):
         if self.root is None:
             self.root = Node(value)
         else:
-            self.size = self.size + 1
-            path = []
-            size = self.size
-            while size != 0: 
-                bit = size % 2 
-                path.insert(0, bit)
-                size = size / 2
-            path = path[1:]
             Heap._insert(value, self.root, path)
 
     @staticmethod
     def _insert(value, node, path):
 
+        self.size = self.size + 1
+        path = []
+        size = self.size
+        while size != 0:
+            bit = size % 2
+            path.insert(0, bit)
+            size = size / 2
+        path = path[1:]
 
         if path[0] == 0:
             if node.left is None:
