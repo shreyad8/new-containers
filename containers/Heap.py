@@ -68,26 +68,18 @@ class Heap(BinaryTree):
         FIXME:
         Implement this method.
         '''
-
-        ret = True
+    
         if node.left:
-            if node.value <= node.left:
-                ret &= Heap._is_heap_satisfied(node.left)
-            else:
-                ret = False
+            if node.value > node.left.value:
+                return False
+            if not Heap._is_heap_satisfied(node.left):
+                return False
         if node.right:
-            if node.value <= node.right:
-                ret &= Heap._is_heap_satisfied(node.right)
-            else:
-                ret = False
-        return ret
-
-        ret = True
-        height_left = Heap._height(node.left)
-        height_right = Heap._height(node.right)
-
-        if height_left == height_right:
-            Heap._is_heap_satisfied(node.left)
+            if node.value > node.right.value:
+                return False
+            if not Heap._is_heap_satisfied(node.right):
+                return False
+        return True
 
     def insert(self, value):
         '''
@@ -115,23 +107,22 @@ class Heap(BinaryTree):
         functions.
         '''
 
-        size = Heap.__len__() + 1
         if self.root is None:
             self.root = Node(value)
         else:
-            path = Heap._convert_to_binary(size)
+            self.size = self.size + 1
+            path = []
+            size = self.size
+            while size != 0: 
+                bit = size % 2 
+                path.insert(0, bit)
+                size = size / 2
+            path = path[1:]
             Heap._insert(value, self.root, path)
 
     @staticmethod
     def _insert(value, node, path):
 
-        size = Heap.__len__() + 1
-        path = []
-        while size != 0:
-            bit = size % 2
-            path.insert(0, bit)
-            size = size / 2
-            path = path[1:]
 
         if path[0] == 0:
             if node.left is None:
